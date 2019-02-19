@@ -9,12 +9,12 @@ import {MatButtonModule, MatCheckboxModule, MatFormFieldModule} from '@angular/m
 import {MainComponent} from './main/main.component';
 
 const routes: Routes = [
-  // {path: '', redirectTo: 'login', pathMatch: 'full'}, // canActivate: [AuthGuard]
+   {path: '', redirectTo: 'login', pathMatch: 'full'}, // canActivate: [AuthGuard]
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'main', component: MainComponent },
   // otherwise redirect to home
-  // { path: '**', redirectTo: 'login' }
+   { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({
