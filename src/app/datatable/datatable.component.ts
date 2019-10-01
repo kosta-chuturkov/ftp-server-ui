@@ -8,8 +8,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 })
 export class DatatableComponent implements OnInit {
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   columnNamesInternal: string[] = ['name', 'timestamp', 'size', 'download_hash', 'delete_hash', 'file_type'];
   columnsDisplayname: string[] = ['Name', 'Uploaded', 'Size', 'Download', 'Delete', 'Type'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
