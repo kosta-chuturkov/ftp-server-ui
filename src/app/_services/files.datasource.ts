@@ -5,12 +5,11 @@ import {FileResponse} from "../_models/fileResponse";
 import {FileManagementService} from "./fileManagementService";
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
+import {FindAllFilesPageResponse} from "../_models/findAllFilesPageResponse";
 
 export class FilesDataSource extends DataSource<FileResponse> {
 
   private filesSubject = new BehaviorSubject<FileResponse[]>([]);
-
-  private loadingSubject = new BehaviorSubject<boolean>(false);
 
   set data(v: FileResponse[]) {
     this.filesSubject.next(v);
@@ -20,8 +19,6 @@ export class FilesDataSource extends DataSource<FileResponse> {
     return this.filesSubject.value;
   }
 
-  public loading$ = this.loadingSubject.asObservable();
-
   constructor(protected fileManagementService: FileManagementService,
               public paginator: MatPaginator,
               public sort: MatSort) {
@@ -30,14 +27,14 @@ export class FilesDataSource extends DataSource<FileResponse> {
   }
 
   loadFiles(requestId: string, authorization: string, page?: number, size?: number) {
-
-    this.loadingSubject.next(true);
-
-    this.fileManagementService.getAllFiles(requestId, authorization, page, size).pipe(
-      catchError(() => of([])),
-      finalize(() => this.loadingSubject.next(false))
-    ).subscribe(files => this.data = files);
-
+    this.fileManagementService
+      .getAllFiles(requestId, authorization, page, size)
+      .subscribe(files => {
+        this.paginator.length = files.totalElements;
+        this.paginator.pageSize = files.numberOfElements;
+        this.paginator.pageIndex=files.number;
+        this.data = files.content;
+      });
   }
 
   connect(collectionViewer: CollectionViewer): Observable<FileResponse[]> {
@@ -49,27 +46,16 @@ export class FilesDataSource extends DataSource<FileResponse> {
       this.paginator.page,
       this.sort.sortChange
     ];
-    this.loadFiles("dummy-req-id","Bearer 123", this.paginator.pageIndex, 3)
+    this.loadFiles("dummy-req-id","Bearer 123", this.paginator.pageIndex, 10)
     // Set the paginators length
-    this.paginator.length = this.data.length;
 
     return merge(...dataMutations).pipe(map(() => {
-      return this.getPagedData(this.getSortedData([...this.data]));
+      return (this.getSortedData([...this.data]));
     }));
   }
 
   disconnect(collectionViewer: CollectionViewer): void {
     this.filesSubject.complete();
-    this.loadingSubject.complete();
-  }
-
-  /**
-   * Paginate the data (client-side). If you're using server-side pagination,
-   * this would be replaced by requesting the appropriate data from the server.
-   */
-  private getPagedData(data: FileResponse[]) {
-    const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
-    return data.splice(startIndex, this.paginator.pageSize);
   }
 
   /**

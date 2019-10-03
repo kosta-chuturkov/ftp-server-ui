@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {map} from "rxjs/operators";
 import {FileResponse} from "../_models/fileResponse";
+import {FindAllFilesPageResponse} from "../_models/findAllFilesPageResponse";
 
 
 @Injectable()
@@ -16,7 +17,7 @@ export class FileManagementService {
     this.httpClient = httpClient;
   }
 
-  public getAllFiles(requestId: string, authorization: string, page?: number, size?: number): Observable<FileResponse[]> {
+  public getAllFiles(requestId: string, authorization: string, page?: number, size?: number): Observable<FindAllFilesPageResponse> {
     if (requestId === null || requestId === undefined) {
       throw new Error('Required parameter requestId was null or undefined when calling findBots.');
     }
@@ -38,8 +39,6 @@ export class FileManagementService {
         params: queryParameters,
         headers: headers,
       }
-    ).pipe(
-      map(res =>  res["content"])
     );
   }
 }

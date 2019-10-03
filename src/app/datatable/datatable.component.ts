@@ -24,7 +24,6 @@ export class DatatableComponent implements OnInit {
     this.dataSource = new FilesDataSource(fileManagementService, this.paginator, this.sort);
   }
 
-  //
   // applyFilter(filterValue: string) {
   //   this.dataSource.filter = filterValue.trim().toLowerCase();
   // }
@@ -41,6 +40,10 @@ export class DatatableComponent implements OnInit {
       case 'Shared': return '#0073e6';
     }
     return '#800044';
+  }
+
+  handlePageChange(event) {
+    this.dataSource.loadFiles("dummy-req-id","Bearer 123", event.pageIndex, event.pageSize)
   }
 }
 
