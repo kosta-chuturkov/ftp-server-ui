@@ -9,6 +9,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MainComponent} from './main.component';
 import {DatatableComponent} from '../datatable/datatable.component';
 import {FileSizePipe} from '../_services/file-size.pipe';
+import {FileManagementService} from "../_services/fileManagementService";
 @NgModule({
   declarations: [MainComponent, DatatableComponent, FileSizePipe],
   imports: [
@@ -26,7 +27,9 @@ import {FileSizePipe} from '../_services/file-size.pipe';
     MatSidenavModule,
     MatToolbarModule,
     MatIconModule,
-    MatListModule
-  ]
+    MatListModule,
+  ], providers: [
+    FileManagementService
+]
 })
 export class MainModule { }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {FileManagementService} from "../_services/fileManagementService";
+import {FindAllFilesPageResponse} from "../_models/findAllFilesPageResponse";
 
 @Component({
   selector: 'app-main',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  constructor() { }
+  constructor(protected fileManagementService: FileManagementService) { }
 
   ngOnInit() {
   }
