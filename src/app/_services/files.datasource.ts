@@ -69,7 +69,6 @@ export class FilesDataSource extends DataSource<FileResponse> {
 
     return data.sort((a, b) => {
       const isAsc = this.sort.direction === 'asc';
-      console.log(this.sort.active);
       switch (this.sort.active) {
         case 'name':
           return this.compare(a.name, b.name, isAsc);

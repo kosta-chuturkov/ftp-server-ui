@@ -2,8 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
-import {map} from "rxjs/operators";
-import {FileResponse} from "../_models/fileResponse";
 import {FindAllFilesPageResponse} from "../_models/findAllFilesPageResponse";
 
 
