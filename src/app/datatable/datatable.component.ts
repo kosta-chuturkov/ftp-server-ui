@@ -1,10 +1,12 @@
 import {MatPaginator, MatSort} from '@angular/material';
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {FileManagementService} from "../_services/fileManagementService";
 import {FilesDataSource} from "../_services/files.datasource";
+import {BehaviorSubject} from "rxjs";
 
 @Component({
   selector: 'app-datatable',
+  inputs: ['fileType'],
   templateUrl: './datatable.component.html',
   styleUrls: ['./datatable.component.css'],
 })
@@ -12,21 +14,30 @@ export class DatatableComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
+
   columnNamesInternal: string[] = ['name', 'createdBy.nickName', 'createdDate', 'fileSize', 'downloadHash', 'deleteHash', 'fileType'];
   columnsDisplayname: string[] = ['Name', 'Created By', 'Uploaded', 'Size', 'Download', 'Delete', 'Type'];
   private dataSource: FilesDataSource;
+  private fileTypeSubject = new BehaviorSubject<string>(null);
 
-  constructor(protected fileManagementService: FileManagementService) {
-    this.dataSource = new FilesDataSource(fileManagementService, this.paginator, this.sort);
+  set fileType(v: string) {
+    this.fileTypeSubject.next(v);
+  }
+
+  get fileType(): string {
+    return this.fileTypeSubject.value;
+  }
+
+  constructor(public fileManagementService: FileManagementService) {
+    this.dataSource = new FilesDataSource(fileManagementService, this.paginator, this.sort, this.fileTypeSubject);
   }
 
   applyFilter(filterValue: string) {
-    console.log("called")
     if (filterValue == "") {
-      this.dataSource.loadFiles("dummy-req-id", "Bearer 123", 0, 10)
+      this.dataSource.loadFiles(0, 10)
     } else if (filterValue.length > 1) {
       let filter = encodeURIComponent(filterValue.trim().toLowerCase());
-      this.dataSource.updateTableWithSearchData("dummy-req-id", "Bearer 123", filter, 0, 10)
+      this.dataSource.updateTableWithSearchData(filter, 0, 10)
     }
   }
 
@@ -48,7 +59,7 @@ export class DatatableComponent implements OnInit {
   }
 
   handlePageChange(event) {
-    this.dataSource.loadFiles("dummy-req-id", "Bearer 123", event.pageIndex, event.pageSize)
+    this.dataSource.loadFiles(event.pageIndex, event.pageSize)
   }
 }
 

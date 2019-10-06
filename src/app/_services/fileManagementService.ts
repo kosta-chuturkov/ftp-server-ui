@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {FindAllFilesPageResponse} from "../_models/findAllFilesPageResponse";
-
+import * as uuid from 'uuid';
 
 @Injectable()
 export class FileManagementService {
@@ -15,14 +15,10 @@ export class FileManagementService {
     this.httpClient = httpClient;
   }
 
-  public getAllFiles(requestId: string, authorization: string, page?: number, size?: number): Observable<FindAllFilesPageResponse> {
-    if (requestId === null || requestId === undefined) {
-      throw new Error('Required parameter requestId was null or undefined when calling findBots.');
-    }
-
+  public getAllFiles(fileType: BehaviorSubject<string>, page: number, size: number): Observable<FindAllFilesPageResponse> {
     let queryParameters = this.getPageHeaders(page, size);
-
-    let headers = this.getDefaultHeaders(requestId, authorization);
+    queryParameters = queryParameters.set('type', <any>fileType.getValue());
+    let headers = this.getDefaultHeaders(uuid.v4(), "Bearer fdsfrsfss");
 
     return this.httpClient.get<any>(`${this.backendUrl}/api/v1/files/files`,
       {
@@ -32,17 +28,14 @@ export class FileManagementService {
     );
   }
 
-  public search(requestId: string, authorization: string, query: string, page?: number, size?: number): Observable<FindAllFilesPageResponse> {
-    if (requestId === null || requestId === undefined) {
-      throw new Error('Required parameter requestId was null or undefined when calling findBots.');
-    }
+  public search(fileType: BehaviorSubject<string>, query: string, page: number, size: number): Observable<FindAllFilesPageResponse> {
 
     let queryParameters = this.getPageHeaders(page, size);
-
+    queryParameters = queryParameters.set('type', <any>fileType.getValue());
     if (query !== undefined) {
       queryParameters = queryParameters.set('q', <any>query);
     }
-    let headers = this.getDefaultHeaders(requestId, authorization);
+    let headers = this.getDefaultHeaders(uuid.v4(), "Bearer fdsfrsfss");
 
     return this.httpClient.get<any>(`${this.backendUrl}/api/v1/files/files/search`,
       {

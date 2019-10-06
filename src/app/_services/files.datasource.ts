@@ -1,6 +1,6 @@
 import {CollectionViewer, DataSource} from "@angular/cdk/collections";
 import {Observable, BehaviorSubject, of, merge} from "rxjs";
-import {catchError, finalize, map} from "rxjs/operators";
+import {map} from "rxjs/operators";
 import {FileResponse} from "../_models/fileResponse";
 import {FileManagementService} from "./fileManagementService";
 import {MatSort} from "@angular/material/sort";
@@ -8,8 +8,9 @@ import {MatPaginator} from "@angular/material/paginator";
 
 export class FilesDataSource extends DataSource<FileResponse> {
 
-  private filesSubject = new BehaviorSubject<FileResponse[]>([]);
   public filter: string;
+
+  private filesSubject = new BehaviorSubject<FileResponse[]>([]);
 
 
   set data(v: FileResponse[]) {
@@ -22,13 +23,14 @@ export class FilesDataSource extends DataSource<FileResponse> {
 
   constructor(protected fileManagementService: FileManagementService,
               public paginator: MatPaginator,
-              public sort: MatSort) {
+              public sort: MatSort,
+              public fileTypeSubject: BehaviorSubject<string>) {
     super();
   }
 
-  loadFiles(requestId: string, authorization: string, page?: number, size?: number) {
+  loadFiles(page: number, size: number) {
     this.fileManagementService
-      .getAllFiles(requestId, authorization, page, size)
+      .getAllFiles(this.fileTypeSubject, page, size)
       .subscribe(files => {
         this.paginator.length = files.totalElements;
         this.paginator.pageSize = files.numberOfElements;
@@ -37,9 +39,9 @@ export class FilesDataSource extends DataSource<FileResponse> {
       });
   }
 
-  updateTableWithSearchData(requestId: string, authorization: string, query: string, page?: number, size?: number) {
+  updateTableWithSearchData(query: string, page: number, size: number) {
     this.fileManagementService
-      .search(requestId, authorization, query, page, size)
+      .search(this.fileTypeSubject, query, page, size)
       .subscribe(files => {
         this.paginator.length = files.totalElements;
         this.paginator.pageSize = files.numberOfElements;
@@ -57,7 +59,7 @@ export class FilesDataSource extends DataSource<FileResponse> {
       this.paginator.page,
       this.sort.sortChange
     ];
-    this.loadFiles("dummy-req-id", "Bearer 123", this.paginator.pageIndex, 10)
+    this.loadFiles(this.paginator.pageIndex, 10)
     // Set the paginators length
 
     return merge(...dataMutations).pipe(map(() => {
