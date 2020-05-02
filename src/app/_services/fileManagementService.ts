@@ -60,6 +60,7 @@ export class FileManagementService {
     let headers = this.defaultHeaders;
     headers = headers.set('RequestId', String(requestId));
     headers = headers.set('Authorization', String(authorization));
+    headers = headers.set('Access-Control-Allow-Origin', 'http://localhost:8081/');
     return headers;
   }
 }
