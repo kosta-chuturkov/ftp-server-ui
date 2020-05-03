@@ -27,8 +27,8 @@ export class LoginComponent implements OnInit {
     // // reset login status
     // this.loginService.logout();
     //
-    // // get return url from route parameters or default to '/'
-    // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    // get return url from route parameters or default to '/'
+    this.returnUrl = '/main';
   }
 
   // convenience getter for easy access to form fields
