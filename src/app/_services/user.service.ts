@@ -3,10 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
 import { User } from '../_models';
+import {BaseHttpService} from "./baseHttpService";
 
 @Injectable()
-export class UserService {
+export class UserService extends BaseHttpService{
   constructor(private http: HttpClient) {
+    super(http);
   }
 
   getByEmail(email: string) {
@@ -14,7 +16,11 @@ export class UserService {
   }
 
   register(user: User) {
-    return this.http.post(`${environment.backendURL}/users/register`, user);
+    let headers = super.getDefaultHeaders('Bearer 123124')
+    return this.http.post<any>(`${environment.backendURL}/api/v1/register`,user,
+      {
+        headers: headers
+      });
   }
 
 }

@@ -14,7 +14,6 @@ import { RegisterComponent } from './register';
 import {AppRoutingModule} from './app-routing.module';
 import {LoginComponent} from './login/login.component';
 import {CookieService} from 'ngx-cookie-service';
-import {fakeBackendProvider} from './_helpers/fake-backend';
 import {
   MatButtonModule, MatIconModule, MatListModule, MatSidenavModule, MatToolbarModule
 } from '@angular/material';
@@ -50,8 +49,7 @@ import { HeaderComponent } from './header/header.component';
     UserService,
     CookieService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    fakeBackendProvider
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
