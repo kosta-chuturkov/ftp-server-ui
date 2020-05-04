@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     });
     //
     // // reset login status
-    // this.loginService.logout();
+     this.loginService.logout();
     //
     // get return url from route parameters or default to '/'
     this.returnUrl = '/main';
@@ -47,9 +47,11 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
+          console.log('this.router.navigate([this.returnUrl]');
           this.router.navigate([this.returnUrl]);
         },
         error => {
+          console.log('error', error);
           this.alertService.error(error);
           this.loading = false;
         });

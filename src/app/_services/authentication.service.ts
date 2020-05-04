@@ -1,6 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {map} from 'rxjs/operators';
+import {first, map} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
 import {CookieService} from 'ngx-cookie-service';
 import {BaseHttpService} from "./baseHttpService";
@@ -38,7 +38,16 @@ export class LoginService extends BaseHttpService {
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
+    this.http.get(`${environment.backendURL}/api/v1/logout`)
+     .pipe(first())
+      .subscribe(
+        data => {
+          console.log('Logout successfully');
+
+        },
+        error => {
+          console.log('error while logout', error);
+        });
     this.cookieService.deleteAll();
-    window.location.href = this.logoutSuffix;
   }
 }
