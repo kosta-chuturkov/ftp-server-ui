@@ -1,0 +1,15 @@
+<form [formGroup]="inputForm" class="example-form">
+  <mat-form-field class="example-full-width">
+    <input type="text"
+           placeholder="Enter Username..."
+           aria-label="Number"
+           matInput
+           [formControl]="myControl"
+           [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let options of filteredOptions | async" [value]="options">
+        {{options}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>

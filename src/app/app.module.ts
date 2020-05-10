@@ -19,8 +19,12 @@ import {
 } from '@angular/material';
 import {MainModule} from './main/main.module';
 import { HeaderComponent } from './header/header.component';
-
-
+import {FileUploadComponent} from "./file-upload/file-upload.component";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import { AutocompleteHttpFilterComponent } from './autocomplete-http-filter/autocomplete-http-filter.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from '@angular/material';
 @NgModule({
   imports: [
     BrowserModule,
@@ -36,7 +40,11 @@ import { HeaderComponent } from './header/header.component';
     MatSidenavModule,
     MatToolbarModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatProgressBarModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   declarations: [
     AppComponent,
@@ -44,6 +52,8 @@ import { HeaderComponent } from './header/header.component';
     LoginComponent,
     RegisterComponent,
     HeaderComponent,
+    FileUploadComponent,
+    AutocompleteHttpFilterComponent,
   ],
   exports : [MatButtonModule],
   providers: [

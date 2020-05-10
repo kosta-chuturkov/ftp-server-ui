@@ -13,7 +13,7 @@ import {FileManagementService} from "../_services/fileManagementService";
 import {FileUploadComponent} from "../file-upload/file-upload.component";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 @NgModule({
-  declarations: [MainComponent, DatatableComponent,FileUploadComponent, FileSizePipe],
+  declarations: [MainComponent, DatatableComponent, FileSizePipe],
   imports: [
     CommonModule,
     MatButtonModule,
