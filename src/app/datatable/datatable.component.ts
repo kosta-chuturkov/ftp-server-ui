@@ -61,5 +61,13 @@ export class DatatableComponent implements OnInit {
   handlePageChange(event) {
     this.dataSource.loadFiles(event.pageIndex, event.pageSize)
   }
+
+  deleteFile() {
+    console.log('deleting file');
+  }
+
+  downloadFile() {
+    console.log('downloading file');
+  }
 }
 
