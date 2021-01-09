@@ -12,6 +12,7 @@ import {FileSizePipe} from '../_services/file-size.pipe';
 import {FileManagementService} from "../_services/fileManagementService";
 import {FileUploadComponent} from "../file-upload/file-upload.component";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatFileUploadModule} from 'angular-material-fileupload';
 @NgModule({
   declarations: [MainComponent, DatatableComponent, FileSizePipe],
   imports: [
@@ -31,6 +32,7 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     MatIconModule,
     MatListModule,
     MatProgressBarModule,
+    MatFileUploadModule
   ], providers: [
     FileManagementService
 ]

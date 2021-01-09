@@ -25,6 +25,7 @@ import { AutocompleteHttpFilterComponent } from './autocomplete-http-filter/auto
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from '@angular/material';
+import {MatFileUploadModule} from 'angular-material-fileupload';
 @NgModule({
   imports: [
     BrowserModule,
@@ -44,7 +45,8 @@ import {MatInputModule} from '@angular/material';
     MatProgressBarModule,
     MatAutocompleteModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatFileUploadModule
   ],
   declarations: [
     AppComponent,
