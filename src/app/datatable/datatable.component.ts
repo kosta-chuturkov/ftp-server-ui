@@ -1,8 +1,9 @@
-import {MatPaginator, MatSort} from '@angular/material';
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {FileManagementService} from "../_services/fileManagementService";
-import {FilesDataSource} from "../_services/files.datasource";
-import {BehaviorSubject} from "rxjs";
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {FilesDataSource} from '../_services/files.datasource';
+import {BehaviorSubject} from 'rxjs';
+import {FileManagementService} from '../_services/fileManagementService';
 
 @Component({
   selector: 'app-datatable',
@@ -33,10 +34,10 @@ export class DatatableComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    if (filterValue == "") {
+    if (filterValue === '') {
       this.dataSource.loadFiles(0, 10)
     } else if (filterValue.length > 1) {
-      let filter = encodeURIComponent(filterValue.trim().toLowerCase());
+      const filter = encodeURIComponent(filterValue.trim().toLowerCase());
       this.dataSource.updateTableWithSearchData(filter, 0, 10)
     }
   }

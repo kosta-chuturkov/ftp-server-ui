@@ -14,11 +14,11 @@ export class LoginService extends BaseHttpService {
   }
 
   login(email: string, password: string) {
-    let headers = super.getDefaultHeaders('Bearer 123124')
-    let httpParams = new HttpParams()
-      .append("email", email)
-      .append("password", password);
-    console.log(httpParams)
+    const headers = super.getDefaultHeaders('Bearer 123124')
+    const httpParams = new HttpParams()
+      .append('email', email)
+      .append('password', password);
+    console.log(httpParams);
     return this.http.post<any>(`${environment.backendURL}/api/v1/login`, {},
       {
         headers: headers,

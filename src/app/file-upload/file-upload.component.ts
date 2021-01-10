@@ -3,13 +3,14 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import { HttpClient, HttpResponse, HttpRequest,
   HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
-import { of } from 'rxjs/observable/of';
 import { catchError, last, map, tap } from 'rxjs/operators';
+import {environment} from '../../environments/environment';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',
-  styleUrls: ['./file-upload.component.css'],animations: [
+  styleUrls: ['./file-upload.component.css'], animations: [
     trigger('fadeInOut', [
       state('in', style({ opacity: 100 })),
       transition('* => void', [
@@ -24,16 +25,18 @@ export class FileUploadComponent implements OnInit {
   /** Name used in form which will be sent in HTTP request. */
   @Input() param = 'file';
   /** Target URL for file uploading. */
-  @Input() target = 'https://file.io';
+  @Input() target;
   /** File extension that accepted, same as 'accept' of <input type="file" />.
    By the default, it's set to 'image/*'. */
-  @Input() accept = 'image/*';
+  @Input() accept = '*';
   /** Allow you to add handler after its completion. Bubble up response text from remote. */
   @Output() complete = new EventEmitter<string>();
 
   private files: Array<FileUploadModel> = [];
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient) {
+    this.target = environment.backendURL + '/api/v1/files/upload';
+  }
 
   ngOnInit() {
   }
@@ -85,7 +88,9 @@ export class FileUploadComponent implements OnInit {
       catchError((error: HttpErrorResponse) => {
         file.inProgress = false;
         file.canRetry = true;
-        return of(`${file.data.name} upload failed.`);
+        return new Observable((observer) => {
+          observer.error(`${file.data.name} upload failed.`);
+        });
       })
     ).subscribe(
       (event: any) => {

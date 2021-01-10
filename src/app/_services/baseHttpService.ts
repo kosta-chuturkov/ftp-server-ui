@@ -1,7 +1,6 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {environment} from "../../environments/environment";
-import * as uuid from 'uuid';
-
+import {environment} from '../../environments/environment';
+import { v4 as uuidv4 } from 'uuid';
 export class BaseHttpService {
 
   protected backendUrl = environment.backendURL;
@@ -10,7 +9,6 @@ export class BaseHttpService {
   constructor(protected httpClient: HttpClient) {
     this.httpClient = httpClient;
   }
-
   protected getPageHeaders(page: number, size: number) {
     let queryParameters = new HttpParams();
     if (page !== undefined) {
@@ -23,19 +21,19 @@ export class BaseHttpService {
   }
 
   protected getCSRF() {
-    let name = "CSRF-TOKEN=";
-    let ca = document.cookie.split(';');
+    const name = 'CSRF-TOKEN=';
+    const ca = document.cookie.split(';');
     for (let i = 0; i < ca.length; i++) {
       let c = ca[i];
-      while (c.charAt(0) == ' ') c = c.substring(1);
-      if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
+      while (c.charAt(0) === ' ') { c = c.substring(1); }
+      if (c.indexOf(name) !== -1) { return c.substring(name.length, c.length); }
     }
-    return "";
+    return '';
   }
 
   protected getDefaultHeaders(authorization: string) {
     let headers = this.defaultHeaders;
-    let requestId = uuid.v4();
+    const requestId = uuidv4();
     headers = headers.set('RequestId', String(requestId));
     headers = headers.set('X-CSRF-TOKEN', this.getCSRF());
     headers = headers.set('Authorization', String(authorization));

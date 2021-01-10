@@ -1,16 +1,26 @@
-<label for="fileUploadForm">Upload file</label>
-<input id="fileUploadForm" type="file" [fileUploadInputFor]= "fileUploadQueue"/>
+<!--<label for="fileUploadForm">Upload file</label><br>-->
+<!--<input id="fileUploadForm" type="file" [fileUploadInputFor]= "fileUploadQueue"/>-->
 <br>
+<div>
+  <button type="button" class="btn btn-secondary btn-sm" (click)="toggleDisabled()">Toggle disabled</button>
+</div>
+<br>
+<ng-select [multiple]="true" [(ngModel)]="selectedCars">
+  <ng-option *ngFor="let car of cars" [value]="car.id" [disabled]="car.disabled">{{car.name}}</ng-option>
+  <ng-option [value]="'custom'">Custom</ng-option>
+</ng-select>
 
-<mat-file-upload-queue #fileUploadQueue
-                       [fileAlias]="'files[]'"
-                       [httpRequestParams]="httpRequestParams"
-                       [httpRequestHeaders]="httpRequestHeaders"
-                       [httpUrl]="fileUploadUrl" multiple>
+<br/>Selected car ID: {{selectedCars | json}}
 
-  <mat-file-upload [file]="file" [id]="i" *ngFor="let file of fileUploadQueue.files; let i = index" [httpRequestParams]="httpRequestParams"
-                   [httpRequestHeaders]="httpRequestHeaders"></mat-file-upload>
-</mat-file-upload-queue>
+<!--<mat-file-upload-queue #fileUploadQueue-->
+<!--                       [fileAlias]="'files[]'"-->
+<!--                       [httpRequestParams]="httpRequestParams"-->
+<!--                       [httpRequestHeaders]="httpRequestHeaders"-->
+<!--                       [httpUrl]="fileUploadUrl" multiple>-->
+
+<!--  <mat-file-upload [file]="file" [id]="i" *ngFor="let file of fileUploadQueue.files; let i = index" [httpRequestParams]="httpRequestParams"-->
+<!--                   [httpRequestHeaders]="httpRequestHeaders"></mat-file-upload>-->
+<!--</mat-file-upload-queue>-->
 <mat-tab-group>
   <mat-tab label="Private files"><app-datatable fileType="PRIVATE"></app-datatable></mat-tab>
   <mat-tab label="Shared files"><app-datatable fileType="SHARED"></app-datatable></mat-tab>

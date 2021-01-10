@@ -12,10 +12,10 @@ export class FileManagementService extends BaseHttpService {
   }
 
   public getAllFiles(fileType: BehaviorSubject<string>, page: number, size: number): Observable<FindAllFilesPageResponse> {
-    let queryParameters = this.getPageHeaders(page, size);
-    let headers = this.getDefaultHeaders("Bearer fdsfrsfss");
+    const queryParameters = this.getPageHeaders(page, size);
+    const headers = this.getDefaultHeaders('Bearer fdsfrsfss');
 
-    let url = `${this.backendUrl}/api/v1/files/` + fileType.getValue().toLocaleLowerCase();
+    const url = `${this.backendUrl}/api/v1/files/` + fileType.getValue().toLocaleLowerCase();
     return this.httpClient.get<any>(url,
       {
         params: queryParameters,
@@ -31,7 +31,7 @@ export class FileManagementService extends BaseHttpService {
     if (query !== undefined) {
       queryParameters = queryParameters.set('q', <any>query);
     }
-    let headers = this.getDefaultHeaders("Bearer fdsfrsfss");
+    const headers = this.getDefaultHeaders('Bearer fdsfrsfss');
 
     return this.httpClient.get<any>(`${this.backendUrl}/api/v1/files/files/search`,
       {

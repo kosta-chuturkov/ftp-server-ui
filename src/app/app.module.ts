@@ -14,18 +14,22 @@ import { RegisterComponent } from './register';
 import {AppRoutingModule} from './app-routing.module';
 import {LoginComponent} from './login/login.component';
 import {CookieService} from 'ngx-cookie-service';
-import {
-  MatButtonModule, MatIconModule, MatListModule, MatSidenavModule, MatToolbarModule
-} from '@angular/material';
+
 import {MainModule} from './main/main.module';
 import { HeaderComponent } from './header/header.component';
-import {FileUploadComponent} from "./file-upload/file-upload.component";
-import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {FileUploadComponent} from './file-upload/file-upload.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { AutocompleteHttpFilterComponent } from './autocomplete-http-filter/autocomplete-http-filter.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from '@angular/material';
-import {MatFileUploadModule} from 'angular-material-fileupload';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {NgSelectModule} from '@ng-select/ng-select';
+import {NgOptionHighlightModule} from '@ng-select/ng-option-highlight';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+import {MatListModule} from '@angular/material/list';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
 @NgModule({
   imports: [
     BrowserModule,
@@ -46,7 +50,8 @@ import {MatFileUploadModule} from 'angular-material-fileupload';
     MatAutocompleteModule,
     MatFormFieldModule,
     MatInputModule,
-    MatFileUploadModule
+    NgSelectModule,
+    NgOptionHighlightModule,
   ],
   declarations: [
     AppComponent,

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from "rxjs";
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -13,12 +12,12 @@ export class HeaderComponent implements OnInit {
   }
 
   fileChange(event) {
-    let fileList: FileList = event.target.files;
-    if(fileList.length > 0) {
-      let file: File = fileList[0];
-      let formData:FormData = new FormData();
+    const fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      const file: File = fileList[0];
+      const formData: FormData = new FormData();
       formData.append('uploadFile', file, file.name);
-      let headers = new Headers();
+      const headers = new Headers();
       /** In Angular 5, including the header Content-Type can invalidate your request */
       headers.append('Content-Type', 'multipart/form-data');
       headers.append('Accept', 'application/json');

@@ -24,7 +24,6 @@
             ],
             "styles": [
               "src/styles.css"
-
             ],
             "scripts": []
           },
@@ -124,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "ftp-server-ui"
+  "defaultProject": "ftp-server-ui",
+  "cli": {
+    "analytics": false
+  }
 }
