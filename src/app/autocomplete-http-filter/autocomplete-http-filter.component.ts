@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
-import {first, map, startWith} from 'rxjs/operators';
-import {environment} from "../../environments/environment";
-import {HttpClient} from "@angular/common/http";
-import {BaseHttpService} from "../_services/baseHttpService";
+import {first, map} from 'rxjs/operators';
+import {environment} from '../../environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {BaseHttpService} from '../_services/baseHttpService';
+import {UserNicknameEntry} from '../_models/UserNicknameEntry';
+import {SelectAutocompleteComponent} from '../select-autocomplete/select-autocomplete.component';
 
 /**
  * @title Filter autocomplete
@@ -15,44 +17,57 @@ import {BaseHttpService} from "../_services/baseHttpService";
   styleUrls: ['./autocomplete-http-filter.component.css']
 })
 export class AutocompleteHttpFilterComponent extends BaseHttpService implements OnInit {
-  myControl = new FormControl();
-  options: string[] = [];
-  filteredOptions: Observable<string[]>;
-  inputForm: FormGroup;
+  filteredOptions: any[];
+  selectedControl = new FormControl();
+  @ViewChild(SelectAutocompleteComponent)
+  multiSelect: SelectAutocompleteComponent;
+  profileForm: FormGroup = new FormGroup({
+    selected: this.selectedControl
+  });
 
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient) {
-    super(http)
+    super(http);
   }
 
   ngOnInit() {
-    this.inputForm = this.formBuilder.group({
-      userName: ['', [Validators.required, Validators.minLength(2)]],
-    });
-    this.filteredOptions = this.myControl.valueChanges
-      .pipe(map(value => this._filter(value)));
+    this._filter();
   }
 
-  private _filter(value: string): string[] {
-    let headers = super.getDefaultHeaders('Bearer 123124')
-    let url = `${environment.backendURL}/api/v1/users/search?q=` + value;
-    let localOptions = [];
-    if (value.length > 2) {
-      this.http.get(url, {
-        headers: headers,
-      })
-        .pipe(first())
-        .subscribe(
-          data => {
-            for (let entry of data["content"]) {
-              localOptions.push(entry.nickName)
-            }
-          },
-          error => {
-            console.log('error while fetching users', error);
+  onToggleDropdown() {
+    this.multiSelect.toggleDropdown();
+  }
+
+  onSubmit() {
+    console.log('submited');
+    // console.log(this.selectedControl.value);
+  }
+
+  private _filter(): any[] {
+    const headers = super.getDefaultHeaders('Bearer 123124');
+    const url = `${environment.backendURL}/api/v1/users`;
+    const localOptions = [];
+    this.http.get<[]>(url, {
+      headers: headers,
+    })
+      .pipe(first())
+      .subscribe(
+        data => {
+          let counter = 1;
+          for (const entry of data) {
+            const nickNameEntry: UserNicknameEntry = new UserNicknameEntry();
+            nickNameEntry.display = entry['display'];
+            nickNameEntry.value = entry['value'];
+            localOptions.push(nickNameEntry);
+            counter++;
           }
-        );
-    }
+          console.log('localOptions', localOptions);
+        },
+        error => {
+          console.log('error while fetching users', error);
+        }
+      );
+    this.filteredOptions = localOptions;
     return localOptions;
   }
 }

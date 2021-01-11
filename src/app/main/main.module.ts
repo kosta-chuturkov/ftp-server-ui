@@ -19,12 +19,18 @@ import {MatListModule} from '@angular/material/list';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {NgOptionHighlightModule} from '@ng-select/ng-option-highlight';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FileManagementService} from '../_services/fileManagementService';
 import {FileUploadComponent} from '../file-upload/file-upload.component';
+import {AutocompleteComponent} from '../autocomplete/autocomplete.component';
+import {AutocompleteHttpFilterComponent} from '../autocomplete-http-filter/autocomplete-http-filter.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {SelectAutocompleteComponent} from '../select-autocomplete/select-autocomplete.component';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
-  declarations: [MainComponent, DatatableComponent, FileSizePipe, FileUploadComponent],
+  declarations: [MainComponent, DatatableComponent, FileSizePipe, FileUploadComponent,
+    AutocompleteComponent, SelectAutocompleteComponent, AutocompleteHttpFilterComponent],
   imports: [
     CommonModule,
     MatButtonModule,
@@ -44,7 +50,10 @@ import {FileUploadComponent} from '../file-upload/file-upload.component';
     MatProgressBarModule,
     NgSelectModule,
     NgOptionHighlightModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+    MatSelectModule,
   ], providers: [
     FileManagementService
 ]

@@ -28,11 +28,6 @@ export class AutocompleteComponent implements OnInit {
     this.httpRequestParams = new HttpParams().set('userNickNames', '[stoyan]');
   }
 
-  toggleDisabled() {
-    const car: any = this.cars[1];
-    car.disabled = !car.disabled;
-  }
-
   ngOnInit(): void {
   }
 

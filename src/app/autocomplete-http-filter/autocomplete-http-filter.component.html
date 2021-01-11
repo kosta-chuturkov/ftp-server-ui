@@ -1,15 +1,15 @@
-<form [formGroup]="inputForm" class="example-form">
-  <mat-form-field class="example-full-width">
-    <input type="text"
-           placeholder="Enter Username..."
-           aria-label="Number"
-           matInput
-           [formControl]="myControl"
-           [matAutocomplete]="auto">
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let options of filteredOptions | async" [value]="options">
-        {{options}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-</form>
+<div>
+  <div>
+    <form [formGroup]="profileForm" class="example-form" (ngSubmit)="onSubmit()">
+      <mat-select-autocomplete
+        [placeholder]="'Select users to share file to:'"
+        [options]="filteredOptions"
+        [multiple]='true'
+        name="optionsSelector"
+        ngDefaultControl
+        [formControl]="selectedControl">
+        <!-- To use formControl within formGroup, provide [formControl] = formGroupName.controls[‘formControlName’] otherwise just [formControl] = ‘formControlName’ -->
+      </mat-select-autocomplete>
+    </form>
+  </div>
+</div>

@@ -18,7 +18,6 @@ import {CookieService} from 'ngx-cookie-service';
 import {MainModule} from './main/main.module';
 import { HeaderComponent } from './header/header.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import { AutocompleteHttpFilterComponent } from './autocomplete-http-filter/autocomplete-http-filter.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {NgSelectModule} from '@ng-select/ng-select';
@@ -29,7 +28,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
-import { AutocompleteComponent } from './autocomplete/autocomplete.component';
+import {MatSelectModule} from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 @NgModule({
   imports: [
     BrowserModule,
@@ -53,6 +53,8 @@ import { AutocompleteComponent } from './autocomplete/autocomplete.component';
     NgSelectModule,
     NgOptionHighlightModule,
     FormsModule,
+    MatSelectModule,
+    MatCheckboxModule,
   ],
   declarations: [
     AppComponent,
@@ -60,8 +62,6 @@ import { AutocompleteComponent } from './autocomplete/autocomplete.component';
     LoginComponent,
     RegisterComponent,
     HeaderComponent,
-    AutocompleteHttpFilterComponent,
-    AutocompleteComponent,
   ],
   exports: [MatButtonModule],
   providers: [
