@@ -23,7 +23,7 @@ export class FileUploadComponent implements OnInit {
   /** Link text */
   @Input() text = 'Upload File';
   /** Name used in form which will be sent in HTTP request. */
-  @Input() param = 'file';
+  @Input() param = 'files[]';
   /** Target URL for file uploading. */
   @Input() target;
   /** File extension that accepted, same as 'accept' of <input type="file" />.
@@ -67,6 +67,7 @@ export class FileUploadComponent implements OnInit {
   private uploadFile(file: FileUploadModel) {
     const fd = new FormData();
     fd.append(this.param, file.data);
+    fd.append('userNickNames', '[stoyan]');
 
     const req = new HttpRequest('POST', this.target, fd, {
       reportProgress: true

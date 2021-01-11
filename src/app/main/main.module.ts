@@ -21,9 +21,10 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import {NgOptionHighlightModule} from '@ng-select/ng-option-highlight';
 import {FormsModule} from '@angular/forms';
 import {FileManagementService} from '../_services/fileManagementService';
+import {FileUploadComponent} from '../file-upload/file-upload.component';
 
 @NgModule({
-  declarations: [MainComponent, DatatableComponent, FileSizePipe],
+  declarations: [MainComponent, DatatableComponent, FileSizePipe, FileUploadComponent],
   imports: [
     CommonModule,
     MatButtonModule,

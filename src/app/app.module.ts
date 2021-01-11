@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule, HTTP_INTERCEPTORS, HttpClientXsrfModule} from '@angular/common/http';
 
 // used to create fake backend
@@ -17,7 +17,6 @@ import {CookieService} from 'ngx-cookie-service';
 
 import {MainModule} from './main/main.module';
 import { HeaderComponent } from './header/header.component';
-import {FileUploadComponent} from './file-upload/file-upload.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { AutocompleteHttpFilterComponent } from './autocomplete-http-filter/autocomplete-http-filter.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
@@ -30,6 +29,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -52,6 +52,7 @@ import {MatButtonModule} from '@angular/material/button';
     MatInputModule,
     NgSelectModule,
     NgOptionHighlightModule,
+    FormsModule,
   ],
   declarations: [
     AppComponent,
@@ -59,10 +60,10 @@ import {MatButtonModule} from '@angular/material/button';
     LoginComponent,
     RegisterComponent,
     HeaderComponent,
-    FileUploadComponent,
     AutocompleteHttpFilterComponent,
+    AutocompleteComponent,
   ],
-  exports : [MatButtonModule],
+  exports: [MatButtonModule],
   providers: [
     AuthGuard,
     AlertService,
