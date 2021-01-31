@@ -35,10 +35,10 @@ export class DatatableComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     if (filterValue === '') {
-      this.dataSource.loadFiles(0, 10)
+      this.dataSource.loadFiles(0, 10);
     } else if (filterValue.length > 1) {
       const filter = encodeURIComponent(filterValue.trim().toLowerCase());
-      this.dataSource.updateTableWithSearchData(filter, 0, 10)
+      this.dataSource.updateTableWithSearchData(filter, 0, 10);
     }
   }
 
@@ -60,7 +60,7 @@ export class DatatableComponent implements OnInit {
   }
 
   handlePageChange(event) {
-    this.dataSource.loadFiles(event.pageIndex, event.pageSize)
+    this.dataSource.loadFiles(event.pageIndex, event.pageSize);
   }
 
   deleteFile() {

@@ -6,12 +6,12 @@
     <app-file-upload [options]="this.options"></app-file-upload>
   </div>
   <div>
-    <mat-tab-group>
-      <mat-tab label="Private files">
-        <app-datatable fileType="PRIVATE"></app-datatable>
+    <mat-tab-group (selectedTabChange)="handleChanged($event)">
+      <mat-tab label="{{privateFilesLabel}}">
+        <app-datatable *ngIf="privateTabSelected" fileType="PRIVATE"></app-datatable>
       </mat-tab>
-      <mat-tab label="Shared files">
-        <app-datatable fileType="SHARED"></app-datatable>
+      <mat-tab label="{{sharedFilesLabel}}">
+        <app-datatable *ngIf="sharedTabSelected" fileType="SHARED"></app-datatable>
       </mat-tab>
     </mat-tab-group>
   </div>

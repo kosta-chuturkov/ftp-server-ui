@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {MatTabChangeEvent} from '@angular/material/tabs';
 
 @Component({
   selector: 'app-main',
@@ -7,6 +8,10 @@ import {Component, OnInit} from '@angular/core';
 })
 export class MainComponent implements OnInit {
   options: string;
+  privateFilesLabel = 'Private files';
+  sharedFilesLabel = 'Shared files';
+  privateTabSelected = true;
+  sharedTabSelected = false;
 
   constructor() {
   }
@@ -16,7 +21,11 @@ export class MainComponent implements OnInit {
   }
 
   onOptionsChanged(data: string) {
-    console.log('called:', data);
     this.options = data;
+  }
+
+  handleChanged(data: MatTabChangeEvent) {
+    this.privateTabSelected = !this.privateTabSelected;
+    this.sharedTabSelected = !this.sharedTabSelected;
   }
 }
