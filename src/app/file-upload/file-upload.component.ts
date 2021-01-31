@@ -1,9 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { trigger, state, style, animate, transition } from '@angular/animations';
-import { HttpClient, HttpResponse, HttpRequest,
-  HttpEventType, HttpErrorResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs/Subscription';
-import { catchError, last, map, tap } from 'rxjs/operators';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {trigger, state, style, animate, transition} from '@angular/animations';
+import {
+  HttpClient, HttpResponse, HttpRequest,
+  HttpEventType, HttpErrorResponse
+} from '@angular/common/http';
+import {Subscription} from 'rxjs/Subscription';
+import {catchError, last, map, tap} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 
@@ -12,9 +14,9 @@ import {Observable} from 'rxjs';
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.css'], animations: [
     trigger('fadeInOut', [
-      state('in', style({ opacity: 100 })),
+      state('in', style({opacity: 100})),
       transition('* => void', [
-        animate(300, style({ opacity: 0 }))
+        animate(300, style({opacity: 0}))
       ])
     ])
   ]
@@ -33,6 +35,7 @@ export class FileUploadComponent implements OnInit {
   @Output() complete = new EventEmitter<string>();
 
   private files: Array<FileUploadModel> = [];
+  @Input() options: string;
 
   constructor(private _http: HttpClient) {
     this.target = environment.backendURL + '/api/v1/files/upload';
@@ -46,8 +49,10 @@ export class FileUploadComponent implements OnInit {
     fileUpload.onchange = () => {
       for (let index = 0; index < fileUpload.files.length; index++) {
         const file = fileUpload.files[index];
-        this.files.push({ data: file, state: 'in',
-          inProgress: false, progress: 0, canRetry: false, canCancel: true });
+        this.files.push({
+          data: file, state: 'in',
+          inProgress: false, progress: 0, canRetry: false, canCancel: true
+        });
       }
       this.uploadFiles();
     };
@@ -67,7 +72,8 @@ export class FileUploadComponent implements OnInit {
   private uploadFile(file: FileUploadModel) {
     const fd = new FormData();
     fd.append(this.param, file.data);
-    fd.append('userNickNames', '[stoyan]');
+    const users = '[' + this.options + ']';
+    fd.append('userNickNames', users);
 
     const req = new HttpRequest('POST', this.target, fd, {
       reportProgress: true
@@ -84,7 +90,8 @@ export class FileUploadComponent implements OnInit {
             return event;
         }
       }),
-      tap(message => { }),
+      tap(message => {
+      }),
       last(),
       catchError((error: HttpErrorResponse) => {
         file.inProgress = false;

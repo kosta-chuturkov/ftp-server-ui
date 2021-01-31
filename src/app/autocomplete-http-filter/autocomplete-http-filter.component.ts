@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {first, map} from 'rxjs/operators';
@@ -18,6 +18,7 @@ import {SelectAutocompleteComponent} from '../select-autocomplete/select-autocom
 })
 export class AutocompleteHttpFilterComponent extends BaseHttpService implements OnInit {
   filteredOptions: any[];
+  @Output() finalOptions = new EventEmitter<string>();
   selectedControl = new FormControl();
   @ViewChild(SelectAutocompleteComponent)
   multiSelect: SelectAutocompleteComponent;
@@ -69,5 +70,10 @@ export class AutocompleteHttpFilterComponent extends BaseHttpService implements 
       );
     this.filteredOptions = localOptions;
     return localOptions;
+  }
+
+  getSelectedOptions(data: any) {
+    this.finalOptions.emit(data);
+   //  console.log('new selection:' + data);
   }
 }

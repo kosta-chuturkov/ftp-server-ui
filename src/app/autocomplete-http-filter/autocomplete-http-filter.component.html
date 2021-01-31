@@ -7,7 +7,8 @@
         [multiple]='true'
         name="optionsSelector"
         ngDefaultControl
-        [formControl]="selectedControl">
+        [formControl]="selectedControl"
+        (selectionChange)="getSelectedOptions($event)">>
         <!-- To use formControl within formGroup, provide [formControl] = formGroupName.controls[‘formControlName’] otherwise just [formControl] = ‘formControlName’ -->
       </mat-select-autocomplete>
     </form>

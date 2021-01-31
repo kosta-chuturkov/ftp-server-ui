@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {EventEmitterService} from './_services/event-emitter.service';
 @Component({
   selector: 'app-root',
   template: `
     <div>
-      <app-header></app-header>
+      <app-header [user]="loggedInUserMail"></app-header>
       <alert></alert>
       <router-outlet></router-outlet>
     </div>
@@ -11,4 +12,8 @@ import { Component } from '@angular/core';
   styles: []
 })
 export class AppComponent {
+  loggedInUserMail: string;
+  constructor(private eventEmitterService: EventEmitterService) {
+    this.eventEmitterService.userEmailEventEmitter.subscribe(data => this.loggedInUserMail = data);
+  }
 }

@@ -1,9 +1,9 @@
 <div>
   <div>
-    <app-autocomplete-http-filter></app-autocomplete-http-filter>
+    <app-autocomplete-http-filter (finalOptions)="onOptionsChanged($event)"></app-autocomplete-http-filter>
   </div>
   <div>
-    <app-file-upload></app-file-upload>
+    <app-file-upload [options]="this.options"></app-file-upload>
   </div>
   <div>
     <mat-tab-group>

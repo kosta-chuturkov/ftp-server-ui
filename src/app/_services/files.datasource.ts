@@ -51,7 +51,7 @@ export class FilesDataSource extends DataSource<FileResponse> {
   }
 
   connect(collectionViewer: CollectionViewer): Observable<FileResponse[]> {
-    console.log("Connecting data source");
+    console.log('Connecting data source');
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
     const dataMutations = [
@@ -59,7 +59,7 @@ export class FilesDataSource extends DataSource<FileResponse> {
       this.paginator.page,
       this.sort.sortChange
     ];
-    this.loadFiles(this.paginator.pageIndex, 10)
+    this.loadFiles(this.paginator.pageIndex, 10);
     // Set the paginators length
 
     return merge(...dataMutations).pipe(map(() => {
@@ -86,7 +86,7 @@ export class FilesDataSource extends DataSource<FileResponse> {
     // Transform the filter by converting it to lowercase and removing whitespace.
     const transformedFilter = filter.trim().toLowerCase();
 
-    return dataStr.indexOf(transformedFilter) != -1;
+    return dataStr.indexOf(transformedFilter) !== -1;
   }
 
   _updatePaginator(filteredDataLength: number) {
@@ -115,7 +115,7 @@ export class FilesDataSource extends DataSource<FileResponse> {
     // If there is a filter string, filter out data that does not contain it.
     // Each data object is converted to a string using the function defined by filterTermAccessor.
     // May be overridden for customization.
-    let filteredData = !this.filter ? data : data.filter(obj => this.filterPredicate(obj, this.filter));
+    const filteredData = !this.filter ? data : data.filter(obj => this.filterPredicate(obj, this.filter));
 
     if (this.paginator) {
       this._updatePaginator(filteredData.length);

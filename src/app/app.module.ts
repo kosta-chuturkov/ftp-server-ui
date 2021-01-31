@@ -30,6 +30,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {EventEmitterService} from './_services/event-emitter.service';
 @NgModule({
   imports: [
     BrowserModule,
@@ -68,6 +69,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     AuthGuard,
     AlertService,
     LoginService,
+    EventEmitterService,
     UserService,
     CookieService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
