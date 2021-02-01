@@ -63,8 +63,13 @@ export class DatatableComponent implements OnInit {
     this.dataSource.loadFiles(event.pageIndex, event.pageSize);
   }
 
-  deleteFile() {
-    console.log('deleting file');
+  deleteFile(element: any) {
+    const url = '/api/v1/files/' + element.deleteHash + '/delete';
+    const currentData = this.dataSource.data;
+    const index: number = currentData.findIndex(d => d === element);
+    currentData.splice(index, 1);
+    this.dataSource.data = currentData;
+    this.fileManagementService.deleteFile(url).subscribe(data => console.log(data));
   }
 
   getDownloadLink(element: any) {

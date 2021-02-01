@@ -41,4 +41,13 @@ export class FileManagementService extends BaseHttpService {
     );
   }
 
+  deleteFile(url: string) {
+    const headers = this.getDefaultHeaders('Bearer fdsfrsfss');
+
+    return this.httpClient.delete<any>(`${this.backendUrl}${url}`,
+      {
+        headers: headers,
+      }
+    );
+  }
 }
