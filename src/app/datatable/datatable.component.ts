@@ -16,8 +16,8 @@ export class DatatableComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  columnNamesInternal: string[] = ['name', 'createdBy.nickName', 'createdDate', 'fileSize', 'downloadHash', 'deleteHash', 'fileType'];
-  columnsDisplayname: string[] = ['Name', 'Created By', 'Uploaded', 'Size', 'Download', 'Delete', 'Type'];
+  columnNamesInternal: string[] = ['name', 'createdBy.nickName', 'createdDate', 'fileSize', 'downloadHash', 'deleteHash'];
+  columnsDisplayname: string[] = ['Name', 'Created By', 'Uploaded', 'Size', 'Download', 'Delete'];
   private dataSource: FilesDataSource;
   private fileTypeSubject = new BehaviorSubject<string>(null);
 
@@ -67,8 +67,8 @@ export class DatatableComponent implements OnInit {
     console.log('deleting file');
   }
 
-  downloadFile() {
-    console.log('downloading file');
+  getDownloadLink(element: any) {
+    return '/api/v1/files/' + element.downloadHash + '/download/' + element.name;
   }
 }
 

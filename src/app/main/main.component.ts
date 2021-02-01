@@ -8,8 +8,8 @@ import {MatTabChangeEvent} from '@angular/material/tabs';
 })
 export class MainComponent implements OnInit {
   options: string;
-  privateFilesLabel = 'Private files';
-  sharedFilesLabel = 'Shared files';
+  privateFilesLabel = 'Uploaded files';
+  sharedFilesLabel = 'Shared to you';
   privateTabSelected = true;
   sharedTabSelected = false;
 
