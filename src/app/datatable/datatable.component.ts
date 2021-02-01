@@ -4,6 +4,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {FilesDataSource} from '../_services/files.datasource';
 import {BehaviorSubject} from 'rxjs';
 import {FileManagementService} from '../_services/fileManagementService';
+import {MatDialog} from '@angular/material/dialog';
+import {DialogComponent} from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-datatable',
@@ -29,7 +31,7 @@ export class DatatableComponent implements OnInit {
     return this.fileTypeSubject.value;
   }
 
-  constructor(public fileManagementService: FileManagementService) {
+  constructor(public fileManagementService: FileManagementService, public dialog: MatDialog) {
     this.dataSource = new FilesDataSource(fileManagementService, this.paginator, this.sort, this.fileTypeSubject);
   }
 
@@ -66,14 +68,27 @@ export class DatatableComponent implements OnInit {
   deleteFile(element: any) {
     const url = '/api/v1/files/' + element.deleteHash + '/delete';
     const currentData = this.dataSource.data;
-    const index: number = currentData.findIndex(d => d === element);
-    currentData.splice(index, 1);
-    this.dataSource.data = currentData;
-    this.fileManagementService.deleteFile(url).subscribe(data => console.log(data));
+    this.fileManagementService.deleteFile(url)
+      .subscribe(
+        data => {
+        const index: number = currentData.findIndex(d => d === element);
+        currentData.splice(index, 1);
+        this.dataSource.data = currentData;
+      },
+      error => {
+        this.openDialog(error);
+      });
   }
 
   getDownloadLink(element: any) {
     return '/api/v1/files/' + element.downloadHash + '/download/' + element.name;
   }
+
+  openDialog(errorMsg) {
+    this.dialog.open(DialogComponent, {
+      data: {message: errorMsg}
+    });
+  }
 }
+
 

@@ -31,6 +31,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {EventEmitterService} from './_services/event-emitter.service';
+import { DialogComponent } from './dialog/dialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
 @NgModule({
   imports: [
     BrowserModule,
@@ -63,8 +65,9 @@ import {EventEmitterService} from './_services/event-emitter.service';
     LoginComponent,
     RegisterComponent,
     HeaderComponent,
+    DialogComponent,
   ],
-  exports: [MatButtonModule],
+    exports: [MatButtonModule, DialogComponent, MatDialogModule],
   providers: [
     AuthGuard,
     AlertService,
